@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.5.3 public/models/soccer_ball.glb -o Soccer.tsx
 */
 
 import * as THREE from "three";
-import React from "react";
+import React, { JSX } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 
@@ -15,7 +15,6 @@ type GLTFResult = GLTF & {
   materials: {
     principledshader: THREE.MeshStandardMaterial;
   };
-  animations: GLTFAction[];
 };
 
 export default function CPGModel(props: JSX.IntrinsicElements["group"]) {

@@ -1,15 +1,15 @@
 import { CharacterDialog } from "@/components";
 import CharacterImage from "@/components/Character/CharacterImage";
-import { Dialog } from "@/components/Dialog";
 
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Suspense } from "react";
 import { Football } from "@/components/SoccerBall";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useContextBridge } from "@react-three/drei";
 import { SoccerBallState } from "@/types/SoccerBall";
 import { AppContext } from "@/context/AppContext";
+import { Modal } from "@/components/Modal";
 
 export default function Home() {
   const [ballAnimation, setBallAnimation] =
@@ -18,31 +18,25 @@ export default function Home() {
   const [statusCharacter, setStatusCharacter] = useState<
     "appears" | "decrease"
   >("appears");
-  const [dialogFinished, setDialogFinished] = useState(false);
   const ContextBridge = useContextBridge(AppContext);
   const context = useContext(AppContext);
-  const handleChangeAnimation = () => {
-    if (ballAnimation == "ballEnter" && !animation) {
-      context?.setVisibleCharacter(true);
-      context?.setVisibleCharacterDialog(true);
-      // setVisibleDialog(false);
-    }
-  };
 
   const onCompleteCharacterDialog = () => {
+    context?.setIsEnded(true);
     context?.setBallClickHandler(() => () => {
-      context?.setVisibleCharacterDialog(false);
+      if (ballAnimation == "resizeBall") return;
       setStatusCharacter("decrease");
       setBallAnimation("resizeBall");
+      context?.setVisibleButtons(true);
+      context?.setDialogPosition("bottom");
+      context?.setDialogMessages([
+        "Haz click en las figuras negras del balon Pedro!",
+      ]);
+      context?.setVisibleCharacterDialog(true);
+      context?.setIsEnded(false);
+      context?.setBallClickHandler(() => () => {});
     });
   };
-
-  useEffect(() => {}, [dialogFinished]);
-  useEffect(() => {
-    if (!animation && ballAnimation == "ballEnter") {
-      // setVisibleDialog(true);
-    }
-  }, [animation, ballAnimation]);
 
   return (
     <>
@@ -63,7 +57,6 @@ export default function Home() {
           <Suspense>
             <ContextBridge>
               <Football
-                handleClick={handleChangeAnimation}
                 setBallAnimation={setBallAnimation}
                 ballAnimation={ballAnimation}
                 animation={animation}
@@ -82,11 +75,14 @@ export default function Home() {
         <CharacterDialog
           isVisible={context!.visibleCharacterDialog}
           onCompleteCharacterDialog={onCompleteCharacterDialog}
+          messages={context!.dialogMessages}
         />
+
         <CharacterImage
           isVisible={context!.visibleCharacter}
           characterAnimation={statusCharacter}
         />
+        <Modal />
       </div>
     </>
   );

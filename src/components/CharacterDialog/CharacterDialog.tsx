@@ -1,61 +1,72 @@
+import { AppContext } from "@/context/AppContext";
 import { motion } from "motion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 export type CharacterDialogProps = {
   onCompleteCharacterDialog: () => void;
   isVisible: boolean;
+  messages: string[];
 };
 
-const messages = [
-  `Qué miras, bobo...? Andá pa' sha!`,
-  `Tu polola te quiere decir algo...`,
-  `Observa atentamente lo que te preparó Pedrito!`,
-  `Haz click en el balón!`,
-];
+const dialogVariants = {
+  center: { x: -20, y: 0 },
+  bottom: { x: -550, y: 100 },
+};
 
 const CharacterDialog: React.FC<CharacterDialogProps> = ({
   onCompleteCharacterDialog,
   isVisible,
+  messages,
 }) => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isThinking, setIsThinking] = useState(false);
   const [typedMessage, setTypedMessage] = useState("");
-
+  const context = useContext(AppContext);
   useEffect(() => {
-    if (!isVisible) return;
-
+    if (!isVisible || messages.length === 0) return;
+    if (context?.isEnded) return;
     const showMessage = async () => {
       if (currentMessageIndex < messages.length) {
         setIsThinking(true);
-        await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula el "pensar..."
+        await new Promise((resolve) => setTimeout(resolve, 8)); // Simula el "pensar..."
         setIsThinking(false);
 
         const currentMessage = messages[currentMessageIndex];
         setTypedMessage("");
+
         for (let i = 0; i < currentMessage.length; i++) {
           setTypedMessage((prev) => prev + currentMessage[i]);
           await new Promise((resolve) => setTimeout(resolve, 50));
         }
 
+        // Alternar entre "left" y "right"
+        context?.setDialogPosition((prev) =>
+          prev === "center" ? "center" : "bottom",
+        );
+
         if (currentMessageIndex === messages.length - 1) {
-          setTimeout(onCompleteCharacterDialog, 1000);
+          setTimeout(() => {
+            onCompleteCharacterDialog();
+            setCurrentMessageIndex(0);
+          }, 1000);
         } else {
-          setTimeout(() => setCurrentMessageIndex((prev) => prev + 1), 2000);
+          setTimeout(() => setCurrentMessageIndex((prev) => prev + 1), 10);
         }
       }
     };
 
     showMessage();
-  }, [currentMessageIndex, isVisible]);
+  }, [currentMessageIndex, isVisible, messages]);
 
   return isVisible ? (
     <motion.div
       role="dialog"
       aria-live="polite"
       className="absolute bottom-5/12 left-1/2 max-w-[370px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg"
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      initial="left" // Posición inicial
+      animate={context?.dialogPosition} // Se controla con el estado
+      variants={dialogVariants} // Usa las variantes de Framer Motion
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <motion.div
         className="inline-block"
