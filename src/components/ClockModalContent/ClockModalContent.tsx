@@ -20,7 +20,6 @@ const ClockModalContent: React.FC = () => {
             position={[2.5, 12, 12]}
             intensity={10}
           />
-          <pointLight position={[20, 20, 20]} />
           <pointLight position={[-20, -20, -20]} intensity={5} />
           <Suspense>
             <Letter text={"6"} />
