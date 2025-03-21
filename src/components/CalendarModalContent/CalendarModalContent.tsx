@@ -53,7 +53,7 @@ const ImageWithSkeleton = ({
       variants={imageVariants}
       custom={delay}
       whileHover={hoverEffect}
-      className={`relative w-full overflow-hidden rounded-lg ${className}`} // 🔹 Aplica estilos personalizados
+      className={`relative w-full overflow-hidden rounded-lg ${className && ""}`} // 🔹 Aplica estilos personalizados
     >
       {/* Skeleton visible mientras la imagen carga */}
       {!loaded && (
@@ -164,8 +164,8 @@ const CalendarModalContent: React.FC = () => {
             </h2>
             <ImageWithSkeleton
               src="/group3.jpg"
-              width={300}
-              height={100}
+              width={200}
+              height={50}
               alt="Familia"
               delay={1.7}
             />
