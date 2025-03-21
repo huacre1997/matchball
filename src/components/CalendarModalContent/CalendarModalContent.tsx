@@ -78,7 +78,7 @@ const ImageWithSkeleton = ({
 
 const CalendarModalContent: React.FC = () => {
   return (
-    <div className="mx-auto flex max-w-screen-lg flex-col gap-5 p-6 text-center">
+    <div className="mx-auto flex max-w-screen-lg flex-col gap-5 p-3 text-center">
       {/* Título principal */}
       <motion.div variants={fadeInUp} custom={0}>
         <h1 className="flex items-center justify-center gap-2 text-2xl font-extrabold sm:text-3xl md:text-4xl">

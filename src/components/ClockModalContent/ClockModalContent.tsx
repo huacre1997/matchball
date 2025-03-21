@@ -11,7 +11,11 @@ const ClockModalContent: React.FC = () => {
           shadows
           orthographic
           camera={{ position: [0, 0, 44], zoom: 40 }}
-          gl={{ preserveDrawingBuffer: true }}
+          gl={{
+            preserveDrawingBuffer: true,
+            antialias: true,
+            powerPreference: "high-performance",
+          }}
           style={{ height: "400px", width: "100%" }}
         >
           <ambientLight intensity={0.8} />

@@ -31,7 +31,8 @@ export default function Letter({
   // Inicializar refs
   useEffect(() => {
     bubbleRefs.current = bubbleRefs.current.slice(0, bubbles.length);
-  }, [bubbles.length]);
+  }, []);
+  const HeartBubbleMemo = React.memo(HeartBubble);
 
   useFrame((state, delta) => {
     if (!ref.current) return;
@@ -85,7 +86,7 @@ export default function Letter({
 
       {/* Renderizar burbujas con movimiento esférico y rotación propia */}
       {bubbles.map((_, i) => (
-        <HeartBubble
+        <HeartBubbleMemo
           key={i}
           ref={(el) => (bubbleRefs.current[i] = el!)}
           position={[0, 0, 0]}
