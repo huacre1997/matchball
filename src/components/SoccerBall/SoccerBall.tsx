@@ -277,7 +277,7 @@ const Football: React.FC<SoccerBallProps> = ({
     <>
       <LightWithHelper />
 
-      <Physics gravity={[0, -25, 0]}>
+      <Physics timeStep={1 / 60} gravity={[0, -25, 0]}>
         {" "}
         {/* 🔥 Aumenta la gravedad en Y */}
         <ambientLight intensity={0.3} />
