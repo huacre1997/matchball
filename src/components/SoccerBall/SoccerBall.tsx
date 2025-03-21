@@ -76,7 +76,7 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
     if (ballAnimation == SoccerBallStates.BALL_ENTER && animation) {
       if (ballRef.current) {
         setTimeout(() => {
-          ballRef.current?.applyImpulse({ x: 5, y: 2, z: 0 }, true);
+          ballRef.current?.applyImpulse({ x: 10, y: 2, z: 0 }, true);
           ballRef.current?.applyTorqueImpulse({ x: 0, y: 0, z: -1 }, true);
         }, 100);
       }
@@ -277,7 +277,7 @@ const Football: React.FC<SoccerBallProps> = ({
     <>
       <LightWithHelper />
 
-      <Physics timeStep={1 / 60}>
+      <Physics gravity={[0, -25, 0]}>
         {" "}
         {/* 🔥 Aumenta la gravedad en Y */}
         <ambientLight intensity={0.3} />
