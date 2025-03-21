@@ -76,8 +76,8 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
     if (ballAnimation == SoccerBallStates.BALL_ENTER && animation) {
       if (ballRef.current) {
         setTimeout(() => {
-          ballRef.current?.applyImpulse({ x: 10, y: 2, z: 0 }, true);
-          ballRef.current?.applyTorqueImpulse({ x: 0, y: 0, z: -1 }, true);
+          ballRef.current?.applyImpulse({ x: 10, y: 4, z: 0 }, true);
+          ballRef.current?.applyTorqueImpulse({ x: 0, y: 0, z: -2 }, true);
         }, 100);
       }
     }
