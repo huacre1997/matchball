@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "motion/react";
@@ -30,7 +28,6 @@ const hoverEffect = {
   transition: { duration: 0.3 },
 };
 
-// Componente de imagen con skeleton
 interface ImageWithSkeletonProps {
   src: string;
   alt: string;
@@ -53,9 +50,8 @@ const ImageWithSkeleton = ({
       variants={imageVariants}
       custom={delay}
       whileHover={hoverEffect}
-      className={`relative w-full overflow-hidden rounded-lg ${className && ""}`} // 🔹 Aplica estilos personalizados
+      className={`relative overflow-hidden rounded-lg ${className}`} // 🔹 Aplica estilos personalizados
     >
-      {/* Skeleton visible mientras la imagen carga */}
       {!loaded && (
         <div
           className={`absolute inset-0 animate-pulse rounded-lg bg-gray-300 ${className}`} // 🔹 Permite personalizar el Skeleton
@@ -65,11 +61,10 @@ const ImageWithSkeleton = ({
         src={src}
         width={width}
         height={height}
-        className={`w-full rounded-lg object-cover shadow-md transition-opacity duration-300 ${
+        className={`rounded-lg object-cover shadow-md transition-opacity duration-300 ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
         alt={alt}
-        priority
         onLoad={() => setLoaded(true)} // Oculta el skeleton cuando la imagen carga
       />
     </motion.div>
@@ -92,7 +87,6 @@ const CalendarModalContent: React.FC = () => {
       </motion.div>
 
       <div className="flex flex-col gap-8 md:flex-row">
-        {/* Bloque de Buenos Aires */}
         <motion.div
           variants={fadeInUp}
           custom={0.2}
@@ -103,9 +97,9 @@ const CalendarModalContent: React.FC = () => {
           </h2>
           <div className="grid grid-cols-2 gap-4">
             <ImageWithSkeleton
-              className={"col-span-2"}
+              className={"col-span-2 justify-self-center"}
               src="/group1_3.jpg"
-              width={250}
+              width={300}
               height={200}
               alt="Buenos Aires 1"
               delay={0.3}
@@ -127,7 +121,6 @@ const CalendarModalContent: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Bloque de Montevideo */}
         <motion.div
           variants={fadeInUp}
           custom={0.9}
@@ -152,8 +145,6 @@ const CalendarModalContent: React.FC = () => {
               delay={1.3}
             />
           </div>
-
-          {/* Bloque de conocer a la familia */}
           <motion.div
             variants={fadeInUp}
             custom={1.5}
@@ -164,10 +155,11 @@ const CalendarModalContent: React.FC = () => {
             </h2>
             <ImageWithSkeleton
               src="/group3.jpg"
-              width={200}
-              height={50}
+              width={300}
+              height={100}
               alt="Familia"
               delay={1.7}
+              className={"col-span-2 justify-self-center"}
             />
           </motion.div>
         </motion.div>
