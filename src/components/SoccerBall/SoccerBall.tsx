@@ -140,7 +140,7 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
         console.log(
           `⚽ La pelota se detuvo en x=${x.toFixed(2)}, y=${y.toFixed(2)}, z=${z.toFixed(2)}`,
         );
-        context?.setCoordinates([x, y, z]);
+        // context?.setCoordinates([x, y, z]);
 
         context?.setVisibleDialog(true);
         if (x < -5) {
@@ -296,13 +296,13 @@ const Football: React.FC<SoccerBallProps> = ({
           position={
             matches
               ? [
-                  context!.coordinates[0] - 4.2,
-                  context!.coordinates[1] + 3.5,
+                  context!.coordinates[0] - 4.5,
+                  context!.coordinates[1] + 4,
                   context!.coordinates[2],
                 ]
               : [
-                  context!.coordinates[0] - 3,
-                  context!.coordinates[1] - 2.5,
+                  context!.coordinates[0] - 2.7,
+                  context!.coordinates[1] + 3,
                   context!.coordinates[2],
                 ]
           }

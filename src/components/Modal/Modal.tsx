@@ -39,7 +39,7 @@ const Modal: React.FC = () => {
             </button>
 
             {/* Contenedor con scroll en pantallas pequeñas y sin scroll en grandes */}
-            <div className="max-h-[70dvh] overflow-y-auto p-3 lg:max-h-none lg:overflow-visible">
+            <div className="max-h-[70dvh] overflow-y-auto lg:max-h-none lg:overflow-visible">
               {context.modalContent}
             </div>
           </motion.div>

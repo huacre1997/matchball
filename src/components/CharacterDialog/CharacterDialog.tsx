@@ -20,10 +20,10 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
   const context = useContext(AppContext);
   const matches = useMediaQuery("(max-width: 768px)");
   const dialogVariants = {
-    center: { x: -20, y: matches ? 80 : 0 },
+    center: { x: matches ? 1 : -20, y: matches ? 50 : 0 },
     bottom: {
-      x: matches ? 45 : -550,
-      y: matches ? 250 : 100,
+      x: matches ? 11 : -550,
+      y: matches ? 200 : 100,
       scale: matches ? 0.8 : 1,
     },
   };
@@ -68,14 +68,14 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
     <motion.div
       role="dialog"
       aria-live="polite"
-      className="absolute bottom-5/12 left-1/2 max-w-[450px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg lg:max-w-[380px]"
+      className="absolute bottom-5/12 left-1/2 max-w-[550px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg lg:max-w-[380px]"
       initial="left" // Posición inicial
       animate={context?.dialogPosition} // Se controla con el estado
       variants={dialogVariants} // Usa las variantes de Framer Motion
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <motion.div
-        className="inline-block"
+        className={`inline-block ${matches ? "text-sm" : "text-xl"}`}
         initial="hidden"
         animate="visible"
         variants={{

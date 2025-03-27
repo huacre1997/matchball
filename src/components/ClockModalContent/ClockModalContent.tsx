@@ -4,7 +4,7 @@ import { Letter } from "../Letter";
 
 const ClockModalContent: React.FC = () => {
   return (
-    <div className="mx-auto flex max-w-screen-lg flex-col p-6 text-center md:flex-row md:items-start lg:items-center">
+    <div className="mx-auto flex max-w-screen-lg flex-col p-3 text-center md:flex-row md:items-start lg:items-center lg:p-6">
       {/* Contenedor del reloj 3D */}
       <div className="flex w-full items-center justify-center md:w-1/2">
         <Canvas
