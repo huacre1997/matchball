@@ -23,7 +23,7 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
     decrease: {
       opacity: 1,
       x: matches ? 0 : -500,
-      y: 80,
+      y: 100,
       scale: 0.8,
       transition: { duration: 1.5, ease: "easeOut" },
     },

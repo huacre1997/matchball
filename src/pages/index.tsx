@@ -52,7 +52,7 @@ export default function Home() {
           priority
         />
         <Canvas
-          style={{ position: "absolute" }}
+          style={{ position: "absolute", width: "100%" }}
           shadows
           camera={{ position: [0, 9.85, 25.39], fov: matches ? 55 : 40 }} // 🔍 Cámara más alejada
         >

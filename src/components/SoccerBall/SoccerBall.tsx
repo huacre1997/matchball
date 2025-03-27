@@ -319,7 +319,7 @@ const Football: React.FC<SoccerBallProps> = ({
               initial={{
                 opacity: 0,
                 y: 0,
-                scale: 0.8,
+                scale: matches ? 0.6 : 0.8,
               }}
             />
           </Html>

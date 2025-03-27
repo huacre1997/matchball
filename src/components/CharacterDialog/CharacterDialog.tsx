@@ -20,10 +20,10 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
   const context = useContext(AppContext);
   const matches = useMediaQuery("(max-width: 768px)");
   const dialogVariants = {
-    center: { x: matches ? 1 : -20, y: matches ? 50 : 0 },
+    center: { x: matches ? 30 : -20, y: matches ? 50 : 0 },
     bottom: {
       x: matches ? 11 : -550,
-      y: matches ? 200 : 100,
+      y: matches ? 180 : 100,
       scale: matches ? 0.8 : 1,
     },
   };

@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, HTMLMotionProps } from "motion/react";
+import { useMediaQuery } from "usehooks-ts";
 
 export type DialogProps = {
   isVisible: boolean;
@@ -8,12 +9,14 @@ export type DialogProps = {
 {
 }
 const Dialog: React.FC<DialogProps> = ({ isVisible, ...props }) => {
+  const matches = useMediaQuery("(max-width: 768px)");
+
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
           className="absolute w-75 rounded-xl bg-blue-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all"
-          animate={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 1, scale: matches ? 0.8 : 1 }}
           exit={{ opacity: 0, scale: 0.8 }} // Desaparece hacia arriba suavemente
           transition={{
             duration: 0.8,
