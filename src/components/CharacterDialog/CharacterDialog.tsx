@@ -68,7 +68,7 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
     <motion.div
       role="dialog"
       aria-live="polite"
-      className="absolute bottom-5/12 left-1/2 max-w-[320px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg lg:max-w-[370px]"
+      className="absolute bottom-5/12 left-1/2 max-w-[450px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg lg:max-w-[380px]"
       initial="left" // Posición inicial
       animate={context?.dialogPosition} // Se controla con el estado
       variants={dialogVariants} // Usa las variantes de Framer Motion

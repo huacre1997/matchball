@@ -23,6 +23,7 @@ import { ClockModalContent } from "../ClockModalContent";
 import { MovieModalContent } from "../MovieModalContent";
 import { MusicModalContent } from "../MusicModalContent";
 import { CalendarModalContent } from "../CalendarModalContent";
+import { useMediaQuery } from "usehooks-ts";
 export type BouncingBallProps = {
   ballAnimation: string;
   animation: boolean;
@@ -273,6 +274,7 @@ const Football: React.FC<SoccerBallProps> = ({
   setBallAnimation,
 }) => {
   const context = useContext(AppContext);
+  const matches = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
@@ -291,11 +293,19 @@ const Football: React.FC<SoccerBallProps> = ({
         />
         {/* 🟦 Nuevo Cubo Agregado */}
         <mesh
-          position={[
-            context!.coordinates[0] - 3,
-            context!.coordinates[1] - 2.5,
-            context!.coordinates[2],
-          ]}
+          position={
+            matches
+              ? [
+                  context!.coordinates[0] - 4.2,
+                  context!.coordinates[1] + 3.5,
+                  context!.coordinates[2],
+                ]
+              : [
+                  context!.coordinates[0] - 3,
+                  context!.coordinates[1] - 2.5,
+                  context!.coordinates[2],
+                ]
+          }
           castShadow
           receiveShadow
           userData={{ style: "z-1" }} // Puedes guardar más info aquí
@@ -308,7 +318,7 @@ const Football: React.FC<SoccerBallProps> = ({
               isVisible={context!.visibleDialog}
               initial={{
                 opacity: 0,
-                y: -230,
+                y: 0,
                 scale: 0.8,
               }}
             />
