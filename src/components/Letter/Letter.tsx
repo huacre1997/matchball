@@ -30,7 +30,6 @@ export default function Letter({
 
   // Inicializar refs
   useEffect(() => {
-    if (bubbleRefs.current) return;
     bubbleRefs.current = bubbleRefs.current.slice(0, bubbles.length);
   }, [bubbles.length]);
   const HeartBubbleMemo = React.memo(HeartBubble);
