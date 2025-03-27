@@ -1,8 +1,6 @@
 "use client";
 
-import { AppContext } from "@/context/AppContext";
 import { AnimatePresence, motion, HTMLMotionProps } from "motion/react";
-import { useContext, useEffect } from "react";
 
 export type DialogProps = {
   isVisible: boolean;
@@ -10,16 +8,6 @@ export type DialogProps = {
 {
 }
 const Dialog: React.FC<DialogProps> = ({ isVisible, ...props }) => {
-  const context = useContext(AppContext);
-
-  useEffect(() => {
-    if (context?.coordinates) {
-      console.log("Primer valor de coordinates:", context.coordinates[0]);
-    } else {
-      console.log("Esperando que coordinates tenga valor...");
-    }
-  }, [isVisible, context?.coordinates]);
-
   return (
     <AnimatePresence>
       {isVisible && (

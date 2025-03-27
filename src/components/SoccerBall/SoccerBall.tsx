@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { RigidBodyType } from "@dimforge/rapier3d-compat";
 import * as THREE from "three";
 import CPGModel from "./Soccer_ball";
-import { Html } from "@react-three/drei";
+import { CameraControls, Html } from "@react-three/drei";
 import { SoccerBallState, SoccerBallStates } from "@/types/SoccerBall";
 import { AppContext } from "../../context/AppContext";
 import { Dialog } from "../Dialog";
@@ -18,6 +18,7 @@ import {
   ClockIcon,
   CalendarIcon,
 } from "@heroicons/react/24/solid";
+
 import { ClockModalContent } from "../ClockModalContent";
 import { MovieModalContent } from "../MovieModalContent";
 import { MusicModalContent } from "../MusicModalContent";
@@ -72,21 +73,21 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
   const modelRef = useRef<Group>(null); // 🔹 Ref para el modelo de la pelota
 
   const [stopped, setStopped] = useState(false);
+
   useEffect(() => {
-    if (ballAnimation == SoccerBallStates.BALL_ENTER && animation) {
-      if (ballRef.current) {
-        setTimeout(() => {
-          ballRef.current?.applyImpulse({ x: 10, y: 4, z: 0 }, true);
-          ballRef.current?.applyTorqueImpulse({ x: 0, y: 0, z: -2 }, true);
-        }, 100);
-      }
-    }
-    if (ballAnimation == SoccerBallStates.RESIZE_BALL && animation) {
-      setTimeout(() => {
+    if (!animation || !ballRef.current) return;
+
+    const timeoutId = setTimeout(() => {
+      if (ballAnimation === SoccerBallStates.BALL_ENTER) {
+        ballRef.current?.applyImpulse({ x: 10.5, y: 4, z: 0 }, true);
+        ballRef.current?.applyTorqueImpulse({ x: 0, y: 0, z: -2 }, true);
+      } else if (ballAnimation === SoccerBallStates.RESIZE_BALL) {
         ballRef.current?.applyImpulse({ x: 0, y: 18, z: 17.5 }, true);
-        ballRef.current?.applyTorqueImpulse({ x: 0, y: 0.2, z: 0 }, true);
-      }, 100);
-    }
+        // ballRef.current?.applyTorqueImpulse({ x: 0, y: 0.2, z: 0 }, true);
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId); // Limpia el timeout al desmontar o actualizar
   }, [ballAnimation, animation]);
 
   const [hasMoved, setHasMoved] = useState(false);
@@ -313,8 +314,8 @@ const Football: React.FC<SoccerBallProps> = ({
             />
           </Html>
         </mesh>
-        <Floor visible={false} setCoordinates={context!.setCoordinates} />
-        <Walls visible={false} />
+        <Floor visible={true} setCoordinates={context!.setCoordinates} />
+        <Walls visible={true} />
       </Physics>
     </>
   );

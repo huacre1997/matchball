@@ -30,6 +30,7 @@ specifiers:
   three: ^0.174.0
   three-stdlib: ^2.35.14
   typescript: ^5
+  usehooks-ts: ^3.1.1
 
 dependencies:
   '@dimforge/rapier3d-compat': 0.15.0
@@ -50,6 +51,7 @@ dependencies:
   react-type-animation: 3.2.0_fwr3onw6qicgupnmbnkfdlamc4
   three: 0.174.0
   three-stdlib: 2.35.14_three@0.174.0
+  usehooks-ts: 3.1.1_react@19.0.0
 
 devDependencies:
   '@eslint/eslintrc': 3.3.0
@@ -2637,6 +2639,10 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash.debounce/4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+    dev: false
+
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
@@ -3687,6 +3693,16 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
+      react: 19.0.0
+    dev: false
+
+  /usehooks-ts/3.1.1_react@19.0.0:
+    resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
+    engines: {node: '>=16.15.0'}
+    peerDependencies:
+      react: ^16.8.0  || ^17 || ^18 || ^19 || ^19.0.0-rc
+    dependencies:
+      lodash.debounce: 4.0.8
       react: 19.0.0
     dev: false
 

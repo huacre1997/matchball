@@ -26,7 +26,8 @@
     "react-dom": "^19.0.0",
     "react-type-animation": "^3.2.0",
     "three": "^0.174.0",
-    "three-stdlib": "^2.35.14"
+    "three-stdlib": "^2.35.14",
+    "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

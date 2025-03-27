@@ -10,6 +10,7 @@ import { OrbitControls, useContextBridge } from "@react-three/drei";
 import { SoccerBallState } from "@/types/SoccerBall";
 import { AppContext } from "@/context/AppContext";
 import { Modal } from "@/components/Modal";
+import { useMediaQuery } from "usehooks-ts";
 
 export default function Home() {
   const [ballAnimation, setBallAnimation] =
@@ -37,6 +38,7 @@ export default function Home() {
       context?.setBallClickHandler(() => () => {});
     });
   };
+  const matches = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
@@ -52,7 +54,7 @@ export default function Home() {
         <Canvas
           style={{ position: "absolute" }}
           shadows
-          camera={{ position: [0, 9.85, 25.39], fov: 40 }} // 🔍 Cámara más alejada
+          camera={{ position: [0, 9.85, 25.39], fov: matches ? 55 : 40 }} // 🔍 Cámara más alejada
         >
           <Suspense>
             <ContextBridge>

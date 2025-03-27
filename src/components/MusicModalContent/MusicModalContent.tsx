@@ -15,18 +15,14 @@ const MusicModalContent: React.FC = () => {
   const duration = 215; // Duración total en segundos (3 minutos y 35 segundos)
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | undefined;
+    if (!isPlaying) return;
 
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setCurrentTime((prev) => (prev < duration ? prev + 1 : duration));
-      }, 1000);
-    }
+    const interval = setInterval(() => {
+      setCurrentTime((prev) => Math.min(prev + 1, duration ?? 0));
+    }, 1000);
 
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isPlaying]);
+    return () => clearInterval(interval); // Limpia el intervalo al desmontar o detener
+  }, [isPlaying, duration]); // 🔹 Se agregó `duration` como dependencia
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);

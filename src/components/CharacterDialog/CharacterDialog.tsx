@@ -1,16 +1,12 @@
 import { AppContext } from "@/context/AppContext";
 import { motion } from "motion/react";
 import { useState, useEffect, useContext } from "react";
+import { useMediaQuery } from "usehooks-ts";
 
 export type CharacterDialogProps = {
   onCompleteCharacterDialog: () => void;
   isVisible: boolean;
   messages: string[];
-};
-
-const dialogVariants = {
-  center: { x: -20, y: 0 },
-  bottom: { x: -550, y: 100 },
 };
 
 const CharacterDialog: React.FC<CharacterDialogProps> = ({
@@ -22,6 +18,16 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
   const [isThinking, setIsThinking] = useState(false);
   const [typedMessage, setTypedMessage] = useState("");
   const context = useContext(AppContext);
+  const matches = useMediaQuery("(max-width: 768px)");
+  const dialogVariants = {
+    center: { x: -20, y: matches ? 80 : 0 },
+    bottom: {
+      x: matches ? 45 : -550,
+      y: matches ? 250 : 100,
+      scale: matches ? 0.8 : 1,
+    },
+  };
+
   useEffect(() => {
     if (!isVisible || messages.length === 0) return;
     if (context?.isEnded) return;
@@ -62,7 +68,7 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
     <motion.div
       role="dialog"
       aria-live="polite"
-      className="absolute bottom-5/12 left-1/2 max-w-[370px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg"
+      className="absolute bottom-5/12 left-1/2 max-w-[320px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg lg:max-w-[370px]"
       initial="left" // Posición inicial
       animate={context?.dialogPosition} // Se controla con el estado
       variants={dialogVariants} // Usa las variantes de Framer Motion
