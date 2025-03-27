@@ -296,7 +296,7 @@ const Football: React.FC<SoccerBallProps> = ({
           position={
             matches
               ? [
-                  context!.coordinates[0] - 4.5,
+                  context!.coordinates[0] - 5,
                   context!.coordinates[1] + 4,
                   context!.coordinates[2],
                 ]

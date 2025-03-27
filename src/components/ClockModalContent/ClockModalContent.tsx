@@ -1,20 +1,20 @@
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { Letter } from "../Letter";
+import { Preload } from "@react-three/drei";
 
 const ClockModalContent: React.FC = () => {
   return (
     <div className="mx-auto flex max-w-screen-lg flex-col p-3 text-center md:flex-row md:items-start lg:items-center lg:p-6">
       {/* Contenedor del reloj 3D */}
-      <div className="flex w-full items-center justify-center md:w-1/2">
+      <div className="flex items-center justify-center md:w-1/2">
         <Canvas
           shadows
           orthographic
           camera={{ position: [0, 0, 44], zoom: 40 }}
           gl={{
-            preserveDrawingBuffer: true,
-            antialias: true,
             powerPreference: "high-performance",
+            antialias: true,
           }}
           style={{ height: "400px", width: "100%" }}
         >
@@ -25,8 +25,9 @@ const ClockModalContent: React.FC = () => {
             intensity={10}
           />
           <pointLight position={[-20, -20, -20]} intensity={5} />
-          <Suspense>
+          <Suspense fallback={null}>
             <Letter text={"6"} />
+            <Preload all />
           </Suspense>
         </Canvas>
       </div>
