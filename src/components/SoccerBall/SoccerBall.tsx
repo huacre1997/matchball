@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { RigidBodyType } from "@dimforge/rapier3d-compat";
 import * as THREE from "three";
 import CPGModel from "./Soccer_ball";
-import { CameraControls, Html } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import { SoccerBallState, SoccerBallStates } from "@/types/SoccerBall";
 import { AppContext } from "../../context/AppContext";
 import { Dialog } from "../Dialog";
@@ -314,8 +314,8 @@ const Football: React.FC<SoccerBallProps> = ({
             />
           </Html>
         </mesh>
-        <Floor visible={true} setCoordinates={context!.setCoordinates} />
-        <Walls visible={true} />
+        <Floor visible={false} setCoordinates={context!.setCoordinates} />
+        <Walls visible={false} />
       </Physics>
     </>
   );
