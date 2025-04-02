@@ -22,7 +22,7 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
     appears: {
       x: 0,
       opacity: 1,
-      scale: 1,
+      scale: isMobile ? 0.8 : isTablet ? 0.9 : isLaptop ? 1 : isDesktop ? 1 : 1,
       transition: { duration: 1.5, ease: "easeOut" },
     },
     decrease: {
