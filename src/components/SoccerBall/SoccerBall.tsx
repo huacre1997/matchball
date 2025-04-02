@@ -303,8 +303,8 @@ const Football: React.FC<SoccerBallProps> = ({
     } else {
       // isDesktop
       return [
-        context!.coordinates[0] - 3,
-        context!.coordinates[1] + 3.4,
+        context!.coordinates[0] - 2.8,
+        context!.coordinates[1] + 3.2,
         context!.coordinates[2],
       ];
     }
