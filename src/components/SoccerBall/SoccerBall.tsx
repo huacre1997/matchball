@@ -284,7 +284,7 @@ const Football: React.FC<SoccerBallProps> = ({
   const getMeshPosition = (): [number, number, number] => {
     if (isMobile) {
       return [
-        context!.coordinates[0] - 5.2,
+        context!.coordinates[0] - 5.3,
         context!.coordinates[1] + 4,
         context!.coordinates[2],
       ];

@@ -28,7 +28,7 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
     decrease: {
       opacity: 1,
       x: isMobile
-        ? -50
+        ? -80
         : isTablet
           ? 0
           : isLaptop
