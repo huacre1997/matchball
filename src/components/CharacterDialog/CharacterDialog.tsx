@@ -19,12 +19,21 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
   const [typedMessage, setTypedMessage] = useState("");
   const context = useContext(AppContext);
   const matches = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 640px)"); // sm
+  const isTablet = useMediaQuery("(min-width: 641px) and (max-width: 768px)"); // md
+  const isLaptop = useMediaQuery("(min-width: 769px) and (max-width: 1024px)"); // lg
+  const isDesktop = useMediaQuery(
+    "(min-width: 1025px) and (max-width: 1280px)",
+  ); // lg
   const dialogVariants = {
-    center: { x: matches ? 30 : -20, y: matches ? 50 : 0 },
+    center: {
+      x: isMobile ? 30 : isTablet ? 30 : isLaptop ? 30 : isDesktop ? 40 : 50,
+      y: isMobile ? 50 : isTablet ? 50 : isLaptop ? 0 : 0,
+    },
     bottom: {
-      x: matches ? 11 : -550,
-      y: matches ? 180 : 100,
-      scale: matches ? 0.8 : 1,
+      x: isMobile ? 1 : isTablet ? 1 : isLaptop ? -550 : -550,
+      y: isMobile ? 180 : isTablet ? 180 : isLaptop ? 100 : 100,
+      scale: isMobile ? 0.8 : isTablet ? 0.8 : isLaptop ? 1 : isDesktop ? 1 : 1,
     },
   };
 

@@ -42,22 +42,18 @@ function BallButton({ children, onClick, ...props }: BallButtonProps) {
 
   return (
     <group ref={ref}>
-      <Html
-        transform
-        zIndexRange={[100, 0]}
-        occlude
-        className="bg-red relative flex h-3 w-3 items-center justify-center rounded-full text-white"
-        {...props}
-      >
-        <motion.button
-          onClick={onClick}
-          className="group bg-blue relative z-[9933] flex h-full w-full cursor-pointer items-center justify-center rounded-full text-[1px]"
-          initial={{ opacity: 0.3 }}
-          whileHover={{ opacity: 1 }}
-        >
-          {children}
-          <motion.span className="bg-blue absolute inset-0 z-[-1] m-auto h-1 w-1 rounded-full opacity-70 transition duration-500 group-hover:bg-gray-950" />
-        </motion.button>
+      <Html transform occlude zIndexRange={[1, 0]} {...props}>
+        <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+          <motion.button
+            onClick={onClick}
+            className="bg-blue relative z-[9933] h-full w-full cursor-pointer items-center justify-center rounded-full text-[1px]"
+            initial={{ opacity: 0.3 }}
+            whileHover={{ opacity: 1 }}
+          >
+            {children}
+            <motion.span className="bg-blue inset-0 z-[-1] m-auto h-1 w-1 rounded-full transition duration-500 group-hover:bg-gray-950" />
+          </motion.button>
+        </div>
       </Html>
     </group>
   );
@@ -203,7 +199,7 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
               opacity={1}
               onClick={handleClickA}
             >
-              <MusicalNoteIcon className="size-1" />
+              <MusicalNoteIcon />
             </BallButton>
             <BallButton
               rotation={[Math.PI, 0, 4.5]}
@@ -274,15 +270,44 @@ const Football: React.FC<SoccerBallProps> = ({
   setBallAnimation,
 }) => {
   const context = useContext(AppContext);
-  const matches = useMediaQuery("(max-width: 768px)");
+
+  const isMobile = useMediaQuery("(max-width: 640px)"); // sm
+  const isTablet = useMediaQuery("(min-width: 641px) and (max-width: 768px)"); // md
+  const isLaptop = useMediaQuery("(min-width: 769px) and (max-width: 1024px)"); // lg
+  const getMeshPosition = (): [number, number, number] => {
+    if (isMobile) {
+      return [
+        context!.coordinates[0] - 4.4,
+        context!.coordinates[1] + 3.4,
+        context!.coordinates[2],
+      ];
+    } else if (isTablet) {
+      return [
+        context!.coordinates[0] - 4.4,
+        context!.coordinates[1] + 3.4,
+        context!.coordinates[2],
+      ];
+    } else if (isLaptop) {
+      return [
+        context!.coordinates[0] - 3,
+        context!.coordinates[1] + 3.4,
+        context!.coordinates[2],
+      ];
+    } else {
+      // isDesktop
+      return [
+        context!.coordinates[0] - 3,
+        context!.coordinates[1] + 3.4,
+        context!.coordinates[2],
+      ];
+    }
+  };
 
   return (
     <>
       <LightWithHelper />
 
       <Physics gravity={[0, -25, 0]}>
-        {" "}
-        {/* 🔥 Aumenta la gravedad en Y */}
         <ambientLight intensity={0.3} />
         <spotLight angle={0.25} penumbra={1} position={[10, 10, 5]} />
         <BouncingBall
@@ -291,44 +316,29 @@ const Football: React.FC<SoccerBallProps> = ({
           setAnimation={setAnimation}
           setBallAnimation={setBallAnimation}
         />
-        {/* 🟦 Nuevo Cubo Agregado */}
+
         <mesh
-          position={
-            matches
-              ? [
-                  context!.coordinates[0] - 5,
-                  context!.coordinates[1] + 4,
-                  context!.coordinates[2],
-                ]
-              : [
-                  context!.coordinates[0] - 2.7,
-                  context!.coordinates[1] + 3,
-                  context!.coordinates[2],
-                ]
-          }
+          position={getMeshPosition()}
           castShadow
           receiveShadow
-          userData={{ style: "z-1" }} // Puedes guardar más info aquí
+          userData={{ style: "z-1" }}
         >
-          {" "}
-          <Html
-            zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-          >
+          <Html zIndexRange={[100, 0]}>
             <Dialog
               isVisible={context!.visibleDialog}
               initial={{
                 opacity: 0,
                 y: 0,
-                scale: matches ? 0.6 : 0.8,
+                scale: isMobile ? 0.6 : isTablet ? 0.7 : isLaptop ? 0.8 : 0.9,
               }}
             />
           </Html>
         </mesh>
+
         <Floor visible={false} setCoordinates={context!.setCoordinates} />
         <Walls visible={false} />
       </Physics>
     </>
   );
 };
-
 export default Football;

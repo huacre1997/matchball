@@ -12,7 +12,12 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
   isVisible,
   characterAnimation,
 }) => {
-  const matches = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 640px)"); // sm
+  const isTablet = useMediaQuery("(min-width: 641px) and (max-width: 768px)"); // md
+  const isLaptop = useMediaQuery("(min-width: 769px) and (max-width: 1024px)"); // lg
+  const isDesktop = useMediaQuery(
+    "(min-width: 1025px) and (max-width: 1280px)",
+  ); // lg
   const characterVariants = {
     appears: {
       x: 0,
@@ -22,7 +27,7 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
     },
     decrease: {
       opacity: 1,
-      x: matches ? 0 : -500,
+      x: isMobile ? 0 : isTablet ? 0 : isLaptop ? -500 : -500,
       y: 100,
       scale: 0.8,
       transition: { duration: 1.5, ease: "easeOut" },
@@ -33,7 +38,7 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
 
   return (
     <motion.div
-      className={`absolute ${matches ? "bottom-[60px] left-[-20px]" : "bottom-1/12 left-140"}`}
+      className={`absolute ${isMobile ? "bottom-1/12 left-1/12" : isTablet ? "bottom-1/12 left-2/12" : isLaptop ? "bottom-1/12 left-2/12" : isDesktop ? "bottom-1/12 left-3/12" : "bottom-1/12 left-4/12"}`}
       initial={{ x: -20, opacity: 0, scale: 0.8 }}
       animate={characterAnimation}
       variants={characterVariants}
@@ -41,7 +46,7 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
       <Image
         src="/messi.png"
         alt="Messi"
-        width={matches ? 200 : 300}
+        width={isMobile ? 180 : isTablet ? 200 : isLaptop ? 250 : 250}
         height={300}
         quality={100}
         priority
