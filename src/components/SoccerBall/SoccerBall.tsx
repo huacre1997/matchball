@@ -42,16 +42,23 @@ function BallButton({ children, onClick, ...props }: BallButtonProps) {
 
   return (
     <group ref={ref}>
-      <Html transform occlude zIndexRange={[1, 0]} {...props}>
+      <Html
+        transform
+        zIndexRange={[100, 0]}
+        occlude
+        className="bg-red relative flex h-3 w-3 items-center justify-center rounded-full text-white"
+        {...props}
+      >
+        {" "}
         <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
           <motion.button
             onClick={onClick}
-            className="bg-blue relative z-[9933] h-full w-full cursor-pointer items-center justify-center rounded-full text-[1px]"
+            className="group bg-blue relative z-[9933] flex h-full w-full cursor-pointer items-center justify-center rounded-full text-[1px]"
             initial={{ opacity: 0.3 }}
             whileHover={{ opacity: 1 }}
           >
             {children}
-            <motion.span className="bg-blue inset-0 z-[-1] m-auto h-1 w-1 rounded-full transition duration-500 group-hover:bg-gray-950" />
+            <motion.span className="bg-blue absolute inset-0 z-[-1] m-auto h-1 w-1 rounded-full opacity-70 transition duration-500 group-hover:bg-gray-950" />
           </motion.button>
         </div>
       </Html>
