@@ -31,9 +31,25 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
       y: isMobile ? 50 : isTablet ? 50 : isLaptop ? 0 : 0,
     },
     bottom: {
-      x: isMobile ? 1 : isTablet ? 1 : isLaptop ? -550 : -550,
+      x: isMobile
+        ? 1
+        : isTablet
+          ? 1
+          : isLaptop
+            ? -250
+            : isDesktop
+              ? -350
+              : -500,
       y: isMobile ? 180 : isTablet ? 180 : isLaptop ? 100 : 100,
-      scale: isMobile ? 0.8 : isTablet ? 0.8 : isLaptop ? 1 : isDesktop ? 1 : 1,
+      scale: isMobile
+        ? 0.8
+        : isTablet
+          ? 0.8
+          : isLaptop
+            ? 0.7
+            : isDesktop
+              ? 0.7
+              : 1,
     },
   };
 
@@ -84,7 +100,7 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <motion.div
-        className={`inline-block ${matches ? "text-sm" : "text-xl"}`}
+        className={`inline-block ${matches ? "text-sm" : "text-lg"}`}
         initial="hidden"
         animate="visible"
         variants={{
