@@ -20,15 +20,15 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
   ); // lg
   const characterVariants = {
     appears: {
-      x: 0,
+      x: isMobile ? -30 : 0,
       opacity: 1,
-      scale: isMobile ? 0.8 : isTablet ? 0.9 : isLaptop ? 1 : isDesktop ? 1 : 1,
+      scale: isMobile ? 1 : isTablet ? 1 : isLaptop ? 1 : isDesktop ? 1 : 1,
       transition: { duration: 1.5, ease: "easeOut" },
     },
     decrease: {
       opacity: 1,
       x: isMobile
-        ? -80
+        ? -50
         : isTablet
           ? 0
           : isLaptop
