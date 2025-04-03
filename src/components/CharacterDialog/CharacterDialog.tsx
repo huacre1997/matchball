@@ -18,6 +18,7 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
   const [isThinking, setIsThinking] = useState(false);
   const [typedMessage, setTypedMessage] = useState("");
   const context = useContext(AppContext);
+
   const matches = useMediaQuery("(max-width: 768px)");
   const isMobile = useMediaQuery("(max-width: 640px)"); // sm
   const isTablet = useMediaQuery("(min-width: 641px) and (max-width: 768px)"); // md
@@ -39,7 +40,7 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
             ? -250
             : isDesktop
               ? -350
-              : -500,
+              : -370,
       y: isMobile ? 180 : isTablet ? 180 : isLaptop ? 100 : 100,
       scale: isMobile
         ? 0.8
@@ -93,7 +94,7 @@ const CharacterDialog: React.FC<CharacterDialogProps> = ({
     <motion.div
       role="dialog"
       aria-live="polite"
-      className="absolute bottom-5/12 left-1/2 max-w-[550px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg lg:max-w-[380px]"
+      className={`absolute bottom-5/12 left-1/2 max-w-[550px] -translate-x-1/2 rounded-lg bg-white p-5 text-lg font-semibold text-black shadow-lg lg:max-w-[380px] ${context?.statusCharacter == "decrease" ? "xl:max-w-[235px]" : "xl:max-w-[380px]"}`}
       initial="left" // Posición inicial
       animate={context?.dialogPosition} // Se controla con el estado
       variants={dialogVariants} // Usa las variantes de Framer Motion

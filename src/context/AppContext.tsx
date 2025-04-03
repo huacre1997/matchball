@@ -26,6 +26,10 @@ interface AppContextType {
   setDialogPosition: React.Dispatch<React.SetStateAction<string>>;
   modalContent: React.ReactNode;
   setModalContent: (content: React.ReactNode) => void;
+  statusCharacter: string;
+  setStatusCharacter: React.Dispatch<
+    React.SetStateAction<"appears" | "decrease">
+  >;
 }
 
 // Crear el contexto con valores por defecto
@@ -50,6 +54,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     (() => void) | undefined
   >(undefined);
   const [dialogPosition, setDialogPosition] = useState<string>("center");
+  const [statusCharacter, setStatusCharacter] = useState<
+    "appears" | "decrease"
+  >("appears");
   return (
     <AppContext.Provider
       value={{
@@ -75,6 +82,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         isModalOpen,
         modalContent,
         setModalContent,
+        statusCharacter,
+        setStatusCharacter,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { RigidBodyType } from "@dimforge/rapier3d-compat";
 import * as THREE from "three";
 import CPGModel from "./Soccer_ball";
-import { Html } from "@react-three/drei";
+import { Html, OrbitControls } from "@react-three/drei";
 import { SoccerBallState, SoccerBallStates } from "@/types/SoccerBall";
 import { AppContext } from "../../context/AppContext";
 import { Dialog } from "../Dialog";
@@ -75,7 +75,7 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
   const context = useContext(AppContext);
   const isRotatingRef = useRef(false); // 🔹 Usamos useRef en lugar de useState
   const modelRef = useRef<Group>(null); // 🔹 Ref para el modelo de la pelota
-
+  const [enableBallOrbit, setEnableBallOrbit] = useState(false);
   const [stopped, setStopped] = useState(false);
 
   useEffect(() => {
@@ -118,6 +118,7 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
         ballRef.current.setAngvel({ x: 0, y: 0.2, z: 0 }, true); // Rotación lenta en el eje Y
         context?.setCoordinates([position.x, position.y, 23]);
         setStopped(true);
+        setEnableBallOrbit(true);
       }
     }
     if (
@@ -154,12 +155,13 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
           context?.setVisibleCharacter(true);
           context?.setVisibleCharacterDialog(true);
           context?.setDialogPosition("center");
-          context?.setDialogMessages([
-            "Qué miras, bobo...? Andá pa' sha!",
-            "Tu polola te quiere decir algo...",
-            "Observa atentamente lo que te preparó Pedrito!",
-            "Haz click en el balón!",
-          ]);
+          context?.setDialogMessages(["Hola"]);
+          // context?.setDialogMessages([
+          //   "Qué miras, bobo...? Andá pa' sha!",
+          //   "Tu polola te quiere decir algo...",
+          //   "Observa atentamente lo que te preparó Pedrito!",
+          //   "Haz click en el balón!",
+          // ]);
           context?.setVisibleDialog(false);
           context?.setBallClickHandler(() => () => {});
           setStopped(false);
@@ -198,6 +200,26 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
       ccd
     >
       <group ref={modelRef}>
+        {enableBallOrbit && (
+          <OrbitControls
+            makeDefault={true}
+            enablePan={false}
+            enableZoom={true}
+            enableRotate={true}
+            autoRotate={false}
+            minPolarAngle={Math.PI / 2} // Restringe el movimiento en el eje Y
+            maxPolarAngle={Math.PI / 2} // Mantiene la vista horizontalmente
+            target={
+              ballRef.current
+                ? new THREE.Vector3(
+                    ballRef.current.translation().x,
+                    ballRef.current.translation().y,
+                    ballRef.current.translation().z,
+                  )
+                : new THREE.Vector3(0, 0, 0) // Posición inicial
+            }
+          />
+        )}
         {context?.visibleButtons && (
           <>
             <BallButton
@@ -206,7 +228,7 @@ const BouncingBall: React.FC<BouncingBallProps> = ({
               opacity={1}
               onClick={handleClickA}
             >
-              <MusicalNoteIcon />
+              <MusicalNoteIcon className="size-1" />
             </BallButton>
             <BallButton
               rotation={[Math.PI, 0, 4.5]}
@@ -245,7 +267,7 @@ const LightWithHelper = () => {
       {/* Luz direccional fija */}
       <directionalLight
         position={[10, 15, 10]} // 🔹 Posición fija
-        intensity={8}
+        intensity={10}
         castShadow
         shadow-mapSize-width={3000}
         shadow-mapSize-height={3000}
@@ -255,10 +277,11 @@ const LightWithHelper = () => {
         shadow-camera-right={20}
         shadow-camera-top={20}
         shadow-camera-bottom={-20}
+        shadow-bias={-0.0001} // 🔹 Reduce artefactos de sombras
+        lookAt={[0, 0, 0]} // 🔹 Fijamos la dirección de la luz
       />
 
       {/* Luz puntual sobre la pelota */}
-      <pointLight position={[0, 4, 0]} intensity={2} distance={8} decay={2} />
     </>
   );
 };
@@ -284,7 +307,7 @@ const Football: React.FC<SoccerBallProps> = ({
   const getMeshPosition = (): [number, number, number] => {
     if (isMobile) {
       return [
-        context!.coordinates[0] - 5.3,
+        context!.coordinates[0] - 5.5,
         context!.coordinates[1] + 4,
         context!.coordinates[2],
       ];
@@ -296,8 +319,8 @@ const Football: React.FC<SoccerBallProps> = ({
       ];
     } else if (isLaptop) {
       return [
-        context!.coordinates[0] - 3,
-        context!.coordinates[1] + 3.4,
+        context!.coordinates[0] - 4.9,
+        context!.coordinates[1] + 4,
         context!.coordinates[2],
       ];
     } else {
@@ -313,10 +336,9 @@ const Football: React.FC<SoccerBallProps> = ({
   return (
     <>
       <LightWithHelper />
-
+      <ambientLight intensity={0.8} />
+      {/* <spotLight angle={0.25} penumbra={1} position={[10, 10, 5]} /> */}
       <Physics gravity={[0, -25, 0]}>
-        <ambientLight intensity={0.3} />
-        <spotLight angle={0.25} penumbra={1} position={[10, 10, 5]} />
         <BouncingBall
           ballAnimation={ballAnimation}
           animation={animation}

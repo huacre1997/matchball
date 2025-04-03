@@ -16,9 +16,7 @@ export default function Home() {
   const [ballAnimation, setBallAnimation] =
     useState<SoccerBallState>("ballEnter");
   const [animation, setAnimation] = useState<boolean>(true);
-  const [statusCharacter, setStatusCharacter] = useState<
-    "appears" | "decrease"
-  >("appears");
+
   const ContextBridge = useContextBridge(AppContext);
   const context = useContext(AppContext);
 
@@ -26,7 +24,7 @@ export default function Home() {
     context?.setIsEnded(true);
     context?.setBallClickHandler(() => () => {
       if (ballAnimation == "resizeBall") return;
-      setStatusCharacter("decrease");
+      context?.setStatusCharacter("decrease");
       setBallAnimation("resizeBall");
       context?.setVisibleButtons(true);
       context?.setDialogPosition("bottom");
@@ -82,7 +80,7 @@ export default function Home() {
 
         <CharacterImage
           isVisible={context!.visibleCharacter}
-          characterAnimation={statusCharacter}
+          characterAnimation={context!.statusCharacter}
         />
         <Modal />
       </div>

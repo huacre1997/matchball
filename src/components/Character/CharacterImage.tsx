@@ -35,7 +35,7 @@ const CharacterImage: React.FC<CharacterImageProps> = ({
             ? -200
             : isDesktop
               ? -300
-              : -100,
+              : -300,
       y: 100,
       scale: 0.8,
       transition: { duration: 1.5, ease: "easeOut" },
